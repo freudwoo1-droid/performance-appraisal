@@ -7,9 +7,28 @@ import React, { useState } from 'react';
 import { FileText, Upload, TrendingUp, Zap, Target, AlertCircle, CheckCircle, XCircle, Flame, Heart } from 'lucide-react';
 
 // NOTE: The main component is renamed to App for single-file React/JSX environment compatibility.
+
+// Define types for our state
+interface AnalysisData {
+  executability: { score: number; analysis: string; evidence: string; };
+  learning: { score: number; analysis: string; evidence: string; };
+  fit: { score: number; analysis: string; evidence: string; };
+  recommendation: string;
+  recommendationText: string;
+  reasoning: string;
+  killerQuestion: string;
+  additionalQuestions: string[];
+  error?: never; // Ensure error objects don't overlap
+}
+
+interface ErrorData {
+  error: true;
+  message: string;
+}
+
 export default function Home() {
   const [resumeText, setResumeText] = useState('');
-  const [analysis, setAnalysis] = useState(null);
+  const [analysis, setAnalysis] = useState<AnalysisData | ErrorData | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [mode, setMode] = useState('professional'); // 'professional' or 'ruthless'
   
